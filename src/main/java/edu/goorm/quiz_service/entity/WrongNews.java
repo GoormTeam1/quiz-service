@@ -1,34 +1,40 @@
 package edu.goorm.quiz_service.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-/**
- * 사용자가 틀린 뉴스 문제를 저장하는 엔티티
- * Users와 News 테이블의 다대다 관계를 관리
- */
+import java.io.Serializable;
+
 @Entity
-@Table(name = "wrong_news")
+@IdClass(WrongNews.WrongNewsId.class)
 @Getter
+@Setter
 @NoArgsConstructor
 public class WrongNews {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    /**
-     * 사용자 이메일 (Users 테이블의 email과 매핑)
-     */
     @Column(name = "email")
     private String email;
-    
-    /**
-     * 틀린 문제의 뉴스 정보
-     * 지연 로딩을 사용하여 성능 최적화
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "news_id")
-    private News news;
-} 
+
+    @Id
+    @Column(name = "news_id")
+    private Long newsId;
+
+    public WrongNews(String email, Long newsId) {
+        this.email = email;
+        this.newsId = newsId;
+    }
+
+    @Embeddable
+    @NoArgsConstructor
+    @Getter
+    public static class WrongNewsId implements Serializable {
+        private String email;
+        private Long newsId;
+
+        public WrongNewsId(String email, Long newsId) {
+            this.email = email;
+            this.newsId = newsId;
+        }
+    }
+}

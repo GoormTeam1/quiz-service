@@ -4,9 +4,11 @@ import edu.goorm.quiz_service.dto.ProblemResponse;
 import edu.goorm.quiz_service.dto.WrongNewsResponse;
 import edu.goorm.quiz_service.entity.News;
 import edu.goorm.quiz_service.entity.Sentence;
+import edu.goorm.quiz_service.entity.Users;
 import edu.goorm.quiz_service.entity.WrongNews;
 import edu.goorm.quiz_service.repository.NewsRepository;
 import edu.goorm.quiz_service.repository.SentenceRepository;
+import edu.goorm.quiz_service.repository.UsersRepository;
 import edu.goorm.quiz_service.repository.WrongNewsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class QuizService {
     private final NewsRepository newsRepository;
     private final SentenceRepository sentenceRepository;
     private final WrongNewsRepository wrongNewsRepository;
+    private final UsersRepository usersRepository;
     
     /**
      * 뉴스 ID로 퀴즈를 조회하는 메서드
@@ -54,6 +57,9 @@ public class QuizService {
         return ProblemResponse.builder()
                 .newsId(news.getNewsId())
                 .title(news.getTitle())
+                .summary(news.getSummary())
+                .source(news.getSource())
+                .image(news.getImage())
                 .problems(problems)
                 .build();
     }
@@ -68,17 +74,19 @@ public class QuizService {
      */
     @Transactional
     public void markNewsAsWrong(String email, Long newsId) {
-        if (wrongNewsRepository.existsByEmailAndNewsNewsId(email, newsId)) {
+        if (wrongNewsRepository.existsByEmailAndNewsId(email, newsId)) {
             return;
         }
 
-        News news = newsRepository.findById(newsId)
-                .orElseThrow(() -> new IllegalArgumentException("News not found"));
-
-        WrongNews wrongNews = new WrongNews();
-        setField(wrongNews, "email", email);
-        setField(wrongNews, "news", news);
+        if (!usersRepository.existsById(email)) {
+            throw new IllegalArgumentException("User not found");
+        }
         
+        if (!newsRepository.existsById(newsId)) {
+            throw new IllegalArgumentException("News not found");
+        }
+
+        WrongNews wrongNews = new WrongNews(email, newsId);
         wrongNewsRepository.save(wrongNews);
     }
 
@@ -89,20 +97,36 @@ public class QuizService {
      * @return 틀린 문제 목록이 포함된 응답 객체
      */
     public WrongNewsResponse getWrongNewsList(String email) {
-        List<WrongNews> wrongNewsList = wrongNewsRepository.findByEmailWithNews(email);
-        
-        List<WrongNewsResponse.WrongNewsDetail> details = wrongNewsList.stream()
-                .map(wrongNews -> WrongNewsResponse.WrongNewsDetail.builder()
-                        .newsId(wrongNews.getNews().getNewsId())
-                        .title(wrongNews.getNews().getTitle())
-                        .summary(wrongNews.getNews().getSummary())
-                        .build())
+        Users user = usersRepository.findById(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                
+        List<WrongNews> wrongNewsList = wrongNewsRepository.findByEmail(email);
+        List<Long> newsIds = wrongNewsList.stream()
+                .map(WrongNews::getNewsId)
                 .collect(Collectors.toList());
                 
-        return WrongNewsResponse.builder()
-                .email(email)
-                .wrongNewsList(details)
-                .build();
+        List<News> newsList = newsRepository.findAllById(newsIds);
+        
+        return WrongNewsResponse.from(user, newsList);
+    }
+
+    /**
+     * 사용자의 틀린 문제를 모두 삭제하는 메서드
+     */
+    @Transactional
+    public void deleteAllWrongNews(String email) {
+        wrongNewsRepository.deleteByEmail(email);
+    }
+    
+    /**
+     * 특정 틀린 문제를 삭제하는 메서드
+     */
+    @Transactional
+    public void deleteWrongNews(String email, Long newsId) {
+        if (!wrongNewsRepository.existsByEmailAndNewsId(email, newsId)) {
+            throw new IllegalArgumentException("Wrong news not found");
+        }
+        wrongNewsRepository.deleteByEmailAndNewsId(email, newsId);
     }
 
     /**

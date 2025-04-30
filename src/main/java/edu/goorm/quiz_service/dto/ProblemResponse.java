@@ -10,6 +10,9 @@ import java.util.List;
 public class ProblemResponse {
     private Long newsId;
     private String title;
+    private String summary;
+    private String source;
+    private String image;
     private List<Problem> problems;
 
     @Getter

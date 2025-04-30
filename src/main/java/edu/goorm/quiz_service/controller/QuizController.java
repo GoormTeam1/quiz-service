@@ -55,4 +55,15 @@ public class QuizController {
             @RequestHeader("X-User-Email") String email) {
         return ResponseEntity.ok(quizService.getWrongNewsList(email));
     }
+
+    /**
+     * 특정 틀린 문제를 삭제하는 API
+     */
+    @DeleteMapping("/wrong/{newsId}")
+    public ResponseEntity<Void> deleteWrongNews(
+            @RequestHeader("X-User-Email") String email,
+            @PathVariable Long newsId) {
+        quizService.deleteWrongNews(email, newsId);
+        return ResponseEntity.ok().build();
+    }
 } 
