@@ -1,10 +1,13 @@
 package edu.goorm.quiz_service.service;
 
 import edu.goorm.quiz_service.dto.ProblemResponse;
+import edu.goorm.quiz_service.dto.WrongNewsResponse;
 import edu.goorm.quiz_service.entity.News;
 import edu.goorm.quiz_service.entity.Sentence;
+import edu.goorm.quiz_service.entity.WrongNews;
 import edu.goorm.quiz_service.repository.NewsRepository;
 import edu.goorm.quiz_service.repository.SentenceRepository;
+import edu.goorm.quiz_service.repository.WrongNewsRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,11 +16,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,6 +37,9 @@ class QuizServiceTest {
 
     @Mock
     private SentenceRepository sentenceRepository;
+
+    @Mock
+    private WrongNewsRepository wrongNewsRepository;
 
     @Test
     @DisplayName("뉴스 ID로 퀴즈를 조회하면 문제 목록이 반환된다")
@@ -78,10 +87,74 @@ class QuizServiceTest {
             .hasMessage("News not found");
     }
 
+    @Test
+    @DisplayName("틀린 문제를 등록하면 성공적으로 저장된다")
+    void markNewsAsWrong_Success() {
+        // given
+        String email = "test@example.com";
+        Long newsId = 1L;
+        News news = createNews(newsId);
+
+        given(wrongNewsRepository.existsByEmailAndNewsNewsId(email, newsId)).willReturn(false);
+        given(newsRepository.findById(newsId)).willReturn(Optional.of(news));
+
+        // when
+        quizService.markNewsAsWrong(email, newsId);
+
+        // then
+        verify(wrongNewsRepository).save(any(WrongNews.class));
+    }
+
+    @Test
+    @DisplayName("이미 등록된 틀린 문제는 중복 저장되지 않는다")
+    void markNewsAsWrong_AlreadyExists() {
+        // given
+        String email = "test@example.com";
+        Long newsId = 1L;
+
+        given(wrongNewsRepository.existsByEmailAndNewsNewsId(email, newsId)).willReturn(true);
+
+        // when
+        quizService.markNewsAsWrong(email, newsId);
+
+        // then
+        verify(wrongNewsRepository, never()).save(any(WrongNews.class));
+    }
+
+    @Test
+    @DisplayName("유저의 틀린 문제 목록을 조회하면 성공적으로 반환된다")
+    void getWrongNewsList_Success() {
+        // given
+        String email = "test@example.com";
+        News news1 = createNews(1L);
+        News news2 = createNews(2L);
+        
+        WrongNews wrongNews1 = new WrongNews();
+        setField(wrongNews1, "email", email);
+        setField(wrongNews1, "news", news1);
+        
+        WrongNews wrongNews2 = new WrongNews();
+        setField(wrongNews2, "email", email);
+        setField(wrongNews2, "news", news2);
+
+        given(wrongNewsRepository.findByEmailWithNews(email))
+            .willReturn(Arrays.asList(wrongNews1, wrongNews2));
+
+        // when
+        WrongNewsResponse response = quizService.getWrongNewsList(email);
+
+        // then
+        assertThat(response.getEmail()).isEqualTo(email);
+        assertThat(response.getWrongNewsList()).hasSize(2);
+        assertThat(response.getWrongNewsList().get(0).getNewsId()).isEqualTo(1L);
+        assertThat(response.getWrongNewsList().get(1).getNewsId()).isEqualTo(2L);
+    }
+
     private News createNews(Long newsId) {
         News news = new News();
         setField(news, "newsId", newsId);
         setField(news, "title", "테스트 뉴스");
+        setField(news, "summary", "테스트 요약");
         return news;
     }
 
