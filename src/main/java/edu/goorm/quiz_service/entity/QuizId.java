@@ -6,15 +6,15 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Column;
 import java.io.Serializable;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 
-
-
+@AllArgsConstructor
 @Embeddable
 @Getter
 @NoArgsConstructor
 public class QuizId implements Serializable {
 
-    @Column(name = "news_id")  // 실제 DB 컬럼명과 매핑
+    @Column(name = "news_id")
     private Long newsId;
 
     @Column(name = "sentence_index")
@@ -34,3 +34,4 @@ public class QuizId implements Serializable {
         return Objects.hash(newsId, sentenceIndex);
     }
 }
+

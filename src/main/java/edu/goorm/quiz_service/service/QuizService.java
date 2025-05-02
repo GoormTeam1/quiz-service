@@ -4,6 +4,7 @@ import edu.goorm.quiz_service.dto.QuizDto;
 import edu.goorm.quiz_service.entity.Quiz;
 import edu.goorm.quiz_service.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  * 퀴즈 관련 비즈니스 로직을 처리하는 서비스
  * 뉴스 기사 기반의 빈칸 채우기 문제 생성 및 틀린 문제 관리 기능 제공
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -27,15 +29,18 @@ public class QuizService {
      * @param newsId 조회할 뉴스 ID
      * @return 퀴즈 목록
      */
-    public List<QuizDto> getQuizzesByNewsId(Long newsId) {
-        return quizRepository.findByIdNewsId(newsId).stream()
+    public List<QuizDto> getQuizByNewsId(Long newsId) {
+        log.info("Fetching quizzes for newsId: {}", newsId);
+        List<Quiz> quizzes = quizRepository.findByIdNewsId(newsId);
+        log.info("Found {} quizzes", quizzes.size());
+        
+        return quizzes.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
     
     private QuizDto convertToDto(Quiz quiz) {
         QuizDto dto = new QuizDto();
-        dto.setNewsId(quiz.getId().getNewsId());
         dto.setSentenceIndex(quiz.getId().getSentenceIndex());
         dto.setSentenceText(quiz.getSentenceText());
         dto.setTranslateText(quiz.getTranslateText());
