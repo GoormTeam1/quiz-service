@@ -4,23 +4,21 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity
-@Table(name = "sentence")
+@Table(name = "quiz")
 @Getter
 @NoArgsConstructor
-public class Sentence {
+public class Quiz {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sentence_id")
-    private Long sentenceId;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "news_id")
-    private News news;
+    @EmbeddedId
+    private QuizId id;
     
     @Column(name = "sentence_text", length = 200)
     private String sentenceText;
+    
+    @Column(name = "translate_text", length = 200)
+    private String translateText;
     
     @Column(name = "blank_text", length = 200)
     private String blankText;
@@ -28,4 +26,3 @@ public class Sentence {
     @Column(name = "blank_word", length = 45)
     private String blankWord;
 }
-
