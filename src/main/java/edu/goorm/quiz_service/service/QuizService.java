@@ -26,12 +26,12 @@ public class QuizService {
     /**
      * 뉴스 ID로 퀴즈를 조회하는 메서드
      *
-     * @param newsId 조회할 뉴스 ID
+     * @param summaryId 조회할 뉴스 요약 ID
      * @return 퀴즈 목록
      */
-    public List<QuizDto> getQuizByNewsId(Long newsId) {
-        log.info("Fetching quizzes for newsId: {}", newsId);
-        List<Quiz> quizzes = quizRepository.findByIdNewsId(newsId);
+    public List<QuizDto> getQuizBySummaryId(Long summaryId) {
+        log.info("Fetching quizzes for summaryId: {}", summaryId);
+        List<Quiz> quizzes = quizRepository.findByIdSummaryId(summaryId);
         log.info("Found {} quizzes", quizzes.size());
         
         return quizzes.stream()
@@ -41,6 +41,7 @@ public class QuizService {
     
     private QuizDto convertToDto(Quiz quiz) {
         QuizDto dto = new QuizDto();
+        dto.setSummaryId(quiz.getId().getSummaryId());
         dto.setSentenceIndex(quiz.getId().getSentenceIndex());
         dto.setSentenceText(quiz.getSentenceText());
         dto.setTranslateText(quiz.getTranslateText());

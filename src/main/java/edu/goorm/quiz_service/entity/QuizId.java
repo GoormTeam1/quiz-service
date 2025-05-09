@@ -14,8 +14,8 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 public class QuizId implements Serializable {
 
-    @Column(name = "news_id")
-    private Long newsId;
+    @Column(name = "summary_id")
+    private Long summaryId;
 
     @Column(name = "sentence_index")
     private Integer sentenceIndex;
@@ -25,13 +25,13 @@ public class QuizId implements Serializable {
         if (this == o) return true;
         if (!(o instanceof QuizId)) return false;
         QuizId that = (QuizId) o;
-        return Objects.equals(newsId, that.newsId) &&
+        return Objects.equals(summaryId, that.summaryId) &&
                Objects.equals(sentenceIndex, that.sentenceIndex);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(newsId, sentenceIndex);
+        return Objects.hash(summaryId, sentenceIndex);
     }
 }
 

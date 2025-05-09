@@ -24,15 +24,15 @@ public class QuizController {
     private final QuizService quizService;
 
     /**
-     * 뉴스 ID로 퀴즈를 조회하는 API
+     * 뉴스 요약 ID로 퀴즈를 조회하는 API
      *
-     * @param newsId 조회할 뉴스 ID
+     * @param summaryId 조회할 뉴스 요약 ID
      * @return 퀴즈 목록
      */
-    @Operation(summary = "뉴스 ID로 퀴즈 조회", description = "특정 뉴스 ID에 해당하는 퀴즈 목록을 조회합니다.")
-    @GetMapping("/{newsId}")
-    public ResponseEntity<List<QuizDto>> getQuizByNewsId(
-            @Parameter(description = "뉴스 ID", required = true) @PathVariable Long newsId) {
-        return ResponseEntity.ok(quizService.getQuizByNewsId(newsId));
+    @Operation(summary = "뉴스 요약 ID로 퀴즈 조회", description = "특정 뉴스 요약 ID에 해당하는 퀴즈 목록을 조회합니다.")
+    @GetMapping("/{summaryId}")
+    public ResponseEntity<List<QuizDto>> getQuizBySummaryId(
+            @Parameter(description = "뉴스 요약 ID", required = true) @PathVariable Long summaryId) {
+        return ResponseEntity.ok(quizService.getQuizBySummaryId(summaryId));
     }
 } 
