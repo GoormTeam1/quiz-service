@@ -45,7 +45,6 @@ public class QuizService {
         dto.setSentenceIndex(quiz.getId().getSentenceIndex());
         dto.setSentenceText(quiz.getSentenceText());
         dto.setTranslateText(quiz.getTranslateText());
-        dto.setBlankText(quiz.getBlankText());
         dto.setBlankWord(quiz.getBlankWord());
         return dto;
     }

@@ -12,6 +12,5 @@ public class QuizDto {
     private Integer sentenceIndex;
     private String sentenceText;
     private String translateText;
-    private String blankText;
     private String blankWord;
 } 

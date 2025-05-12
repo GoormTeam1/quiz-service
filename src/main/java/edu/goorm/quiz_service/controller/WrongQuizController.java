@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/quiz/wrong")
 @RequiredArgsConstructor
@@ -15,19 +17,25 @@ public class WrongQuizController {
 
     @PostMapping
     public ResponseEntity<Void> saveWrongQuiz(
-        @RequestHeader("X-User-Email") String email,
-        @RequestBody WrongQuizDto request
-    ) {
+            @RequestHeader("X-User-Email") String email,
+            @RequestBody WrongQuizDto request) {
         wrongQuizService.saveWrongQuiz(email, request.getSummaryId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{summaryId}")
     public ResponseEntity<Void> deleteWrongQuiz(
-        @RequestHeader("X-User-Email") String email,
-        @PathVariable Long summaryId
-    ) {
+            @RequestHeader("X-User-Email") String email,
+            @PathVariable Long summaryId) {
         wrongQuizService.deleteWrongQuiz(email, summaryId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping
+    public ResponseEntity<List<WrongQuizDto>> getWrongQuizzes(
+            @RequestHeader("X-User-Email") String email) {
+        List<WrongQuizDto> wrongQuizzes = wrongQuizService.getWrongQuizzesByEmail(email);
+        return ResponseEntity.ok(wrongQuizzes);
+    }
+
 }
