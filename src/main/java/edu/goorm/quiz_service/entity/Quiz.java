@@ -20,9 +20,6 @@ public class Quiz {
     @Column(name = "translate_text", length = 200)
     private String translateText;
     
-    @Column(name = "blank_text", length = 200)
-    private String blankText;
-    
     @Column(name = "blank_word", length = 45)
     private String blankWord;
 }

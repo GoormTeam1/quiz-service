@@ -8,10 +8,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class QuizDto {
-    private Long newsId;
+    private Long summaryId;
     private Integer sentenceIndex;
     private String sentenceText;
     private String translateText;
-    private String blankText;
     private String blankWord;
 } 
