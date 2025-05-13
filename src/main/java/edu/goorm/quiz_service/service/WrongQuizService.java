@@ -26,6 +26,7 @@ public class WrongQuizService {
             WrongQuiz quiz = WrongQuiz.builder()
                 .userEmail(userEmail)
                 .summaryId(summaryId)
+                .status("learning")
                 .build();
 
             wrongQuizRepository.save(quiz);
@@ -33,15 +34,29 @@ public class WrongQuizService {
     }
 
     @Transactional
-    public void deleteWrongQuiz(String userEmail, Long summaryId) {
-        wrongQuizRepository.deleteByUserEmailAndSummaryId(userEmail, summaryId);
-    }
-
     public List<WrongQuizDto> getWrongQuizzesByEmail(String email) {
         List<WrongQuiz> wrongList = wrongQuizRepository.findByUserEmail(email);
         return wrongList.stream()
-            .map(wq -> new WrongQuizDto(wq.getUserEmail(), wq.getSummaryId()))
+            .map(wq -> new WrongQuizDto(
+                wq.getUserEmail(),
+                wq.getSummaryId(),
+                wq.getStatus()  
+            ))
             .collect(Collectors.toList());
     }
     
+    @Transactional
+    public void deleteWrongQuiz(String email, Long summaryId) {
+        wrongQuizRepository.deleteByUserEmailAndSummaryId(email, summaryId);
+    }
+    
+    @Transactional
+    public void updateWrongQuiz(String email, Long summaryId, String status) {
+        WrongQuiz wrongQuiz = wrongQuizRepository
+            .findByUserEmailAndSummaryId(email, summaryId)
+            .orElseThrow(() -> new IllegalArgumentException("Wrong quiz not found"));
+
+        wrongQuiz.setStatus(status);
+        wrongQuizRepository.save(wrongQuiz);
+    }
 }

@@ -11,9 +11,11 @@ import lombok.Setter;
 public class WrongQuizDto {
     private String userEmail;
     private Long summaryId;
+    private String status;
 
     // Constructor to fix the issue
-    public WrongQuizDto(String userEmail, Long summaryId) {
+    public WrongQuizDto(String userEmail, Long summaryId, String status) {
+        this.status = status;
         this.userEmail = userEmail;
         this.summaryId = summaryId;
     }
@@ -33,5 +35,12 @@ public class WrongQuizDto {
 
     public void setSummaryId(Long summaryId) {
         this.summaryId = summaryId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

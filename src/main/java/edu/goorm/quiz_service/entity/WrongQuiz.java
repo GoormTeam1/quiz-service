@@ -23,6 +23,8 @@ public class WrongQuiz {
     @Column(nullable = false, length = 100)
     private String userEmail;
 
+    private String status;
+
     @Column(nullable = false)
     private Long summaryId;
 
