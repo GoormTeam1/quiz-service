@@ -38,4 +38,13 @@ public class WrongQuizController {
         return ResponseEntity.ok(wrongQuizzes);
     }
 
+    @PatchMapping("/{summaryId}")
+    public ResponseEntity<Void> updateWrongQuiz(
+            @RequestHeader("X-User-Email") String email,
+            @PathVariable Long summaryId,
+            @RequestBody WrongQuizDto request) {
+        wrongQuizService.updateWrongQuiz(email, summaryId, request.getStatus());
+        return ResponseEntity.noContent().build();
+    }
+
 }

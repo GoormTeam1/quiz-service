@@ -44,6 +44,7 @@ public class QuizService {
         dto.setSummaryId(quiz.getId().getSummaryId());
         dto.setSentenceIndex(quiz.getId().getSentenceIndex());
         dto.setSentenceText(quiz.getSentenceText());
+    
         dto.setTranslateText(quiz.getTranslateText());
         dto.setBlankWord(quiz.getBlankWord());
         return dto;
