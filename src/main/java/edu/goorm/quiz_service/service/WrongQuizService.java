@@ -56,7 +56,8 @@ public class WrongQuizService {
                     summaryDto != null ? summaryDto.getLevel() : null,
                     wq.getCreatedAt().toLocalDate(),
                     newsDto != null && newsDto.getPublishedAt() != null ? newsDto.getPublishedAt().toLocalDate() : null,
-                    newsDto != null ? newsDto.getTitle() : null
+                    newsDto != null ? newsDto.getTitle() : null,
+                    newsDto != null ? newsDto.getCategory() : null
                 );
             }))
             .collect(Collectors.toList());

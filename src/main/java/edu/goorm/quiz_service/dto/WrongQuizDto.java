@@ -19,8 +19,9 @@ public class WrongQuizDto {
     private LocalDate createdAt;
     private LocalDate publishAt;
     private String title;
+    private String cateogry;
 
-    public WrongQuizDto(String userEmail, Long summaryId, String status, String image, String level, LocalDate createdAt, LocalDate publishAt, String title) {
+    public WrongQuizDto(String userEmail, Long summaryId, String status, String image, String level, LocalDate createdAt, LocalDate publishAt, String title, String category) {
         this.userEmail = userEmail;
         this.summaryId = summaryId;
         this.status = status;
@@ -29,5 +30,6 @@ public class WrongQuizDto {
         this.createdAt = createdAt;
         this.publishAt = publishAt;
         this.title = title;
+        this.cateogry = category;
     }
 }
