@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
     name = "news-service",
-    url = "http://172.16.24.156:8082",
+    url = "http://localhost:8082",
     configuration = FeignConfig.class
 )
 public interface NewsClient {

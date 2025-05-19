@@ -37,7 +37,7 @@ public class WrongQuizService {
         }
     }
 
-    @Transactional
+
     public List<WrongQuizDto> getWrongQuizzesByEmail(String email) {
         List<WrongQuiz> wrongList = wrongQuizRepository.findByUserEmail(email);
     

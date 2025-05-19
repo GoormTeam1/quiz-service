@@ -1,7 +1,9 @@
 package edu.goorm.quiz_service.controller;
 
 import edu.goorm.quiz_service.dto.QuizDto;
+import edu.goorm.quiz_service.logger.CustomLogger;
 import edu.goorm.quiz_service.service.QuizService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +32,17 @@ public class QuizController {
     @GetMapping("/{summaryId}")
     public ResponseEntity<List<QuizDto>> getQuizBySummaryId(
             @RequestHeader("X-User-Email") String email,
-            @PathVariable Long summaryId) {
+            @PathVariable Long summaryId,
+            HttpServletRequest request) {
+        CustomLogger.logRequest(
+                "QUIZ_GET",
+                "/api/quiz/" + summaryId,
+                "GET",
+                email,
+                null,
+                request
+        );
+
         return ResponseEntity.ok(quizService.getQuizBySummaryId(summaryId));
     }
 } 
