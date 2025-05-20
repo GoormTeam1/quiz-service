@@ -22,7 +22,7 @@
     </root>
 
     <!-- ✅ 패키지 전체를 걸기 -->
-    <logger name="edu.goorm.quizservice.controller" level="INFO" additivity="false">
+    <logger name="edu.goorm.quiz_service.controller" level="INFO" additivity="false">
         <appender-ref ref="QUIZCONTROLLER"/>
     </logger>
 
