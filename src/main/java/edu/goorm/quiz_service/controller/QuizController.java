@@ -34,7 +34,7 @@ public class QuizController {
             @RequestHeader("X-User-Email") String email,
             @PathVariable Long summaryId,
             HttpServletRequest request) {
-        CustomLogger.logRequest(
+        CustomLogger.logRequest1(
                 "QUIZ_GET",
                 "/api/quiz/" + summaryId,
                 "GET",

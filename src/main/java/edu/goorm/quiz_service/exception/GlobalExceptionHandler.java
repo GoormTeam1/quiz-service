@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAllExceptions(Exception ex, HttpServletRequest request) {
         // ✅ 로그 기록
-        CustomLogger.logRequest(
+        CustomLogger.logRequest1(
                 "ERROR",
                 request.getRequestURI(),
                 request.getMethod(),
