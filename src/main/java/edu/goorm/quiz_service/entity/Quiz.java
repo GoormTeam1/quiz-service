@@ -14,10 +14,10 @@ public class Quiz {
     @EmbeddedId
     private QuizId id;
     
-    @Column(name = "sentence_text", length = 200)
+    @Column(name = "sentence_text", length = 1000)
     private String sentenceText;
     
-    @Column(name = "translate_text", length = 200)
+    @Column(name = "translate_text", length = 1000)
     private String translateText;
     
     @Column(name = "blank_word", length = 45)

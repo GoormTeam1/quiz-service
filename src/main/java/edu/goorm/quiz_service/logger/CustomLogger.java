@@ -2,7 +2,6 @@ package edu.goorm.quiz_service.logger;
 
 import edu.goorm.quiz_service.controller.QuizController;
 import edu.goorm.quiz_service.controller.WrongQuizController;
-import edu.goorm.quiz_service.entity.WrongQuiz;
 import edu.goorm.quiz_service.util.CustomIpUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -10,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class CustomLogger {
+    
     private static final Logger logger1 = LogManager.getLogger(QuizController.class);
     private static final Logger logger2 = LogManager.getLogger(WrongQuizController.class);
 
