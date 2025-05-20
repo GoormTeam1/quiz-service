@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- ✅ Spring Boot 기본 콘솔 스타일 유지 -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!-- ✅ QuizController 로그 파일 저장 -->
+    <appender name="QUIZCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/quizController.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/quizController.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ✅ 루트 로거는 Console만 유지 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <!-- ✅ 패키지 전체를 걸기 -->
+    <logger name="edu.goorm.quizservice.controller" level="INFO" additivity="false">
+        <appender-ref ref="QUIZCONTROLLER"/>
+    </logger>
+
+</configuration>
