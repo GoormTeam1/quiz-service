@@ -4,44 +4,46 @@
     <!-- ✅ Spring Boot 기본 콘솔 스타일 유지 -->
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <!-- ✅ QuizController 로그 파일 저장 -->
+    <!-- ✅ QuizController 로그 파일 (20분 단위처럼 분할) -->
     <appender name="QUIZCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/quizController.log</file>
+        <file>logs/quiz-service/quizController.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/quizController.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>logs/quiz-service/quizController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-
-    <!-- ✅ WrongQuiz 로그 파일 저장 -->
+    <!-- ✅ WrongQuizController 로그 파일 (20분 단위처럼 분할) -->
     <appender name="WRONGQUIZCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/wrongQuizController.log</file>
+        <file>logs/quiz-service/wrongQuizController.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/wrongQuizController.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>logs/quiz-service/wrongQuizController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-
-    <!-- ✅ 루트 로거는 Console만 유지 -->
+    <!-- ✅ 루트 로거: 콘솔 출력 유지 -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 
-    <!-- quiz -->
-    <logger name="edu.goorm.quiz_service.controller.QuizController" level="INFO" additivity="false">
+    <!-- ✅ QuizController 로거 설정 -->
+    <logger name="edu.goorm.quiz_service.controller.QuizController"
+      level="INFO"
+      additivity="false">
         <appender-ref ref="QUIZCONTROLLER"/>
     </logger>
 
-    <!-- wrongQuiz -->
-    <logger name="edu.goorm.quiz_service.controller.WrongQuizController" level="INFO" additivity="false">
+    <!-- ✅ WrongQuizController 로거 설정 -->
+    <logger name="edu.goorm.quiz_service.controller.WrongQuizController"
+      level="INFO"
+      additivity="false">
         <appender-ref ref="WRONGQUIZCONTROLLER"/>
     </logger>
 
