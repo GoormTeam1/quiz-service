@@ -6,9 +6,9 @@
 
     <!-- ✅ QuizController 로그 파일 (20분 단위처럼 분할) -->
     <appender name="QUIZCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/quiz-service/quizController.log</file>
+        <file>../logs/service/quiz-service/quizController.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/quiz-service/quizController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <fileNamePattern>../logs/service/quiz-service/quizController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -18,9 +18,9 @@
 
     <!-- ✅ WrongQuizController 로그 파일 (20분 단위처럼 분할) -->
     <appender name="WRONGQUIZCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/quiz-service/wrongQuizController.log</file>
+        <file>../logs/service/quiz-service/wrongQuizController.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/quiz-service/wrongQuizController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <fileNamePattern>../logs/service/quiz-service/wrongQuizController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
