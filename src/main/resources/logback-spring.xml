@@ -16,33 +16,14 @@
         </encoder>
     </appender>
 
-
-    <!-- ✅ WrongQuiz 로그 파일 저장 -->
-    <appender name="WRONGQUIZCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/wrongQuizController.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/wrongQuizController.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%msg%n</pattern>
-        </encoder>
-    </appender>
-
-
     <!-- ✅ 루트 로거는 Console만 유지 -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 
     <!-- quiz -->
-    <logger name="edu.goorm.quiz_service.controller.QuizController" level="INFO" additivity="false">
+    <logger name="edu.goorm.quiz_service.controller" level="INFO" additivity="false">
         <appender-ref ref="QUIZCONTROLLER"/>
-    </logger>
-
-    <!-- wrongQuiz -->
-    <logger name="edu.goorm.quiz_service.controller.WrongQuizController" level="INFO" additivity="false">
-        <appender-ref ref="WRONGQUIZCONTROLLER"/>
     </logger>
 
 </configuration>

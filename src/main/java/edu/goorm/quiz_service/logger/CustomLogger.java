@@ -9,11 +9,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class CustomLogger {
-    
-    private static final Logger logger1 = LogManager.getLogger(QuizController.class);
+
+    private static final Logger logger = LogManager.getLogger(QuizController.class);
     private static final Logger logger2 = LogManager.getLogger(WrongQuizController.class);
 
-    public static void logRequest1(
+    public static void logRequest(
         String logType,
         String url,
         String method,
@@ -21,7 +21,7 @@ public class CustomLogger {
         String payload,
         HttpServletRequest request
     ) {
-        logger1.info(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
+        logger.info(String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
             logType,                          // ex: USER_LOGIN, USER_UPDATE_LEVEL
             LocalDateTime.now(),             // 로그 시간
             url,                             // 요청 URL
