@@ -26,7 +26,7 @@ public class WrongQuizController {
         wrongQuizService.saveWrongQuiz(email, request.getSummaryId());
 
         // ✅ 로그 기록
-        CustomLogger.logRequest2(
+        CustomLogger.logRequest(
                 "WRONG_QUIZ_SAVE",
                 "/api/quiz/wrong",
                 "POST",
@@ -42,7 +42,7 @@ public class WrongQuizController {
             @RequestHeader("X-User-Email") String email,
             @PathVariable Long summaryId,
             HttpServletRequest http) {
-        CustomLogger.logRequest2(
+        CustomLogger.logRequest(
                 "WRONG_QUIZ_DELETE",
                 "/api/quiz/wrong/" + summaryId,
                 "DELETE",
@@ -58,7 +58,7 @@ public class WrongQuizController {
     public ResponseEntity<List<WrongQuizDto>> getWrongQuizzes(
             @RequestHeader("X-User-Email") String email,
             HttpServletRequest http) {
-        CustomLogger.logRequest2(
+        CustomLogger.logRequest(
                 "WRONG_QUIZ_GET",
                 "/api/quiz/wrong",
                 "GET",
@@ -78,7 +78,7 @@ public class WrongQuizController {
             HttpServletRequest http) {
         wrongQuizService.updateWrongQuiz(email, summaryId, request.getStatus());
         
-        CustomLogger.logRequest2(
+        CustomLogger.logRequest(
                 "WRONG_QUIZ_UPDATE",
                 "/api/quiz/wrong/" + summaryId,
                 "PATCH",
