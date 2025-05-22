@@ -12,7 +12,11 @@ spring:
       format_sql: truec
     show-sql: true
     database-platform: ${JPA_DIALECT:org.hibernate.dialect.MySQLDialect}
-
+  kafka:
+    consumer:
+      group-id: quiz-service-group
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+      auto-offset-reset: earliest
 server:
   port: 8083
   address: 0.0.0.0
