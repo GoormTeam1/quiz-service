@@ -9,7 +9,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: ${JPA_DDL_AUTO:update}
-      format_sql: truec
+      format_sql: true
     show-sql: true
     database-platform: ${JPA_DIALECT:org.hibernate.dialect.MySQLDialect}
 
