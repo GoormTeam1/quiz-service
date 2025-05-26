@@ -1,18 +1,16 @@
-package edu.goorm.quiz_service.service;
+package edu.goorm.quiz_service.domain.service;
 
-import edu.goorm.quiz_service.dto.QuizDto;
-import edu.goorm.quiz_service.entity.Quiz;
-import edu.goorm.quiz_service.repository.QuizRepository;
+import edu.goorm.quiz_service.domain.dto.QuizDto;
+import edu.goorm.quiz_service.domain.entity.Quiz;
+import edu.goorm.quiz_service.domain.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

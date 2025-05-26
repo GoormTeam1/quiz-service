@@ -1,9 +1,9 @@
-package edu.goorm.quiz_service.consumer;
+package edu.goorm.quiz_service.domain.consumer;
 
 
-import edu.goorm.quiz_service.service.QuizBulkInsertBuffer;
+import edu.goorm.quiz_service.domain.service.QuizBulkInsertBuffer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.goorm.quiz_service.dto.QuizDto;
+import edu.goorm.quiz_service.domain.dto.QuizDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
