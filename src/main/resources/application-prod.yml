@@ -18,6 +18,18 @@ spring:
       bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
       auto-offset-reset: earliest
 
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
+      credentials:
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
+      sqs:
+        listener:
+          max-number-of-messages: 10
+          wait-time: 20s
+          visibility-timeout: 30s
   hikari:
     maximum-pool-size: 10       # 최대 커넥션 수 제한
     minimum-idle: 1             # 최소 유휴 커넥션 수
