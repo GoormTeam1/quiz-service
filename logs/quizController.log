@@ -1,3 +1,0 @@
-ERROR	2025-05-20T15:09:30.616322	/api/quiz/5	GET	-	Exception: Required request header 'X-User-Email' for method parameter type String is not present	127.0.0.1	PostmanRuntime/7.44.0
-ERROR	2025-05-20T15:11:03.088007	/api/quiz/5	GET	-	Exception: Required request header 'X-User-Email' for method parameter type String is not present	127.0.0.1	PostmanRuntime/7.44.0
-QUIZ_GET	2025-05-20T15:11:17.300386	/api/quiz/5	GET	test@test.com	-	127.0.0.1	PostmanRuntime/7.44.0
