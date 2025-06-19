@@ -51,6 +51,8 @@ dependencies {
 
     // (Optional) JSON 변환을 위한 Jackson
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 
