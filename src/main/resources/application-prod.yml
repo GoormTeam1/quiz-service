@@ -37,5 +37,15 @@ feign:
         connectTimeout: 3000
         readTimeout: 5000
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
 news-service:
   url: ${NEWS_URL_PROD}
