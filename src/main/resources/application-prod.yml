@@ -42,11 +42,12 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, info
-  endpoint:
-    health:
-      probes:
+        include: health, info, metrics, prometheus
+  metrics:
+    export:
+      prometheus:
         enabled: true
+
 
 news-service:
   url: ${NEWS_URL_PROD}
